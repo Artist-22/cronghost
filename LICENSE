@@ -1,5 +1,5 @@
 CronGhost Software License
-Copyright (c) 2026 ARTIST. All rights reserved.
+Copyright (c) 2026 Artist-22. All rights reserved.
 
 ═══════════════════════════════════════════════════════════════
 CRONGHOST — SCHEDULED TASK SHADOW SCANNER
@@ -9,7 +9,7 @@ Custom Source Available License v1.0
 1. OWNERSHIP
    The CronGhost software, including all source code, design,
    architecture, concepts, documentation and associated files
-   are the exclusive intellectual property of ARTIST.
+   are the exclusive intellectual property of Artist-22.
    All rights are reserved.
 
 2. WHAT YOU CAN DO (Permitted Use)
@@ -24,7 +24,7 @@ Custom Source Available License v1.0
       so others can download from the official source
 
 3. WHAT YOU CANNOT DO (Prohibited)
-   You may NOT, without explicit written permission from ARTIST:
+   You may NOT, without explicit written permission from Artist-22:
 
    a) Copy, reproduce, or redistribute the source code
       in whole or in part
@@ -44,18 +44,19 @@ Custom Source Available License v1.0
 
 4. COMMERCIAL USE
    Any commercial use of CronGhost requires a separate
-   written commercial license agreement with ARTIST.
-   Contact via GitHub for inquiries.
+   written commercial license agreement with Artist-22.
+   Contact via GitHub for inquiries:
+   github.com/Artist-22/cronghost
 
 5. CONTRIBUTIONS
    If you submit bug reports, suggestions or improvements
-   via the official repository, you agree that ARTIST
+   via the official repository, you agree that Artist-22
    retains full ownership of any resulting changes.
    You will be credited but transfer all rights.
 
 6. NO WARRANTY
    CronGhost is provided as-is without warranty of any kind.
-   ARTIST is not liable for any damage caused by use of
+   Artist-22 is not liable for any damage caused by use of
    this software. Use at your own risk.
 
 7. ENFORCEMENT
@@ -65,15 +66,16 @@ Custom Source Available License v1.0
 
 8. ATTRIBUTION
    If you write about, review, or demonstrate CronGhost
-   publicly you must clearly credit ARTIST as the creator
-   and link to the official GitHub repository.
+   publicly you must clearly credit Artist-22 as the creator
+   and link to the official GitHub repository:
+   github.com/Artist-22/cronghost
 
 9. GOVERNING LAW
    This license is governed by applicable international
    copyright law and the laws of your jurisdiction.
 
 ═══════════════════════════════════════════════════════════════
-   CronGhost was created by ARTIST — 2026
-   github.com/ARTIST/cronghost
+   CronGhost was created by Artist-22 — 2026
+   github.com/Artist-22/cronghost
    Scheduled Task Shadow Scanner — Tier 3
 ═══════════════════════════════════════════════════════════════

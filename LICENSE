@@ -1,0 +1,79 @@
+CronGhost Software License
+Copyright (c) 2026 ARTIST. All rights reserved.
+
+═══════════════════════════════════════════════════════════════
+CRONGHOST — SCHEDULED TASK SHADOW SCANNER
+Custom Source Available License v1.0
+═══════════════════════════════════════════════════════════════
+
+1. OWNERSHIP
+   The CronGhost software, including all source code, design,
+   architecture, concepts, documentation and associated files
+   are the exclusive intellectual property of ARTIST.
+   All rights are reserved.
+
+2. WHAT YOU CAN DO (Permitted Use)
+   You are granted a non-exclusive, non-transferable right to:
+
+   a) Download and run CronGhost on your own systems
+   b) Use CronGhost for personal, educational, or internal
+      security auditing purposes
+   c) Report bugs and suggest improvements via the official
+      GitHub repository
+   d) Share the LINK to the official GitHub repository
+      so others can download from the official source
+
+3. WHAT YOU CANNOT DO (Prohibited)
+   You may NOT, without explicit written permission from ARTIST:
+
+   a) Copy, reproduce, or redistribute the source code
+      in whole or in part
+   b) Modify, adapt, or create derivative works based
+      on CronGhost's source code or architecture
+   c) Use CronGhost's code, concepts, or design as the
+      basis for another tool or project
+   d) Sell, sublicense, rent, or commercially exploit
+      CronGhost in any form
+   e) Remove or alter this license, copyright notices,
+      or author attribution from any part of the software
+   f) Reverse engineer for the purpose of replication
+   g) Claim ownership or co-authorship of CronGhost
+      or any part of its codebase
+   h) Include CronGhost code in any other open source
+      or closed source project
+
+4. COMMERCIAL USE
+   Any commercial use of CronGhost requires a separate
+   written commercial license agreement with ARTIST.
+   Contact via GitHub for inquiries.
+
+5. CONTRIBUTIONS
+   If you submit bug reports, suggestions or improvements
+   via the official repository, you agree that ARTIST
+   retains full ownership of any resulting changes.
+   You will be credited but transfer all rights.
+
+6. NO WARRANTY
+   CronGhost is provided as-is without warranty of any kind.
+   ARTIST is not liable for any damage caused by use of
+   this software. Use at your own risk.
+
+7. ENFORCEMENT
+   Violation of this license will result in immediate
+   termination of your rights to use CronGhost and may
+   result in legal action under applicable copyright law.
+
+8. ATTRIBUTION
+   If you write about, review, or demonstrate CronGhost
+   publicly you must clearly credit ARTIST as the creator
+   and link to the official GitHub repository.
+
+9. GOVERNING LAW
+   This license is governed by applicable international
+   copyright law and the laws of your jurisdiction.
+
+═══════════════════════════════════════════════════════════════
+   CronGhost was created by ARTIST — 2026
+   github.com/ARTIST/cronghost
+   Scheduled Task Shadow Scanner — Tier 3
+═══════════════════════════════════════════════════════════════

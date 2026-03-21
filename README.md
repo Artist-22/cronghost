@@ -7,7 +7,7 @@
 | |___| | | (_) | | | | |_| || | | | (_) \__ \ |_ 
  \____|_|  \___/|_| |_|\____||_| |_|\___/|___/\__|
 
-  Scheduled Task Shadow Scanner — v3.0.0 -Artist-22
+  Scheduled Task Shadow Scanner — v3.0.0 
   Created by Artist-22
 ```
 
@@ -236,16 +236,16 @@ The report contains every finding with full details — file path, threat score,
 
 ## Why CronGhost is Different
 
-|          Feature           | Basic cron scanners |            CronGhost                |
-|                            |                     |                                     |
-| Locations checked          |          4-7        | **14**                              |
-| False positive filtering   |         None        | Smart whitelist + confidence scoring|
-| Package manager check      |          No         | **Yes — dpkg verification**         |
-| Cryptographic baseline     |          No         | **Yes — SHA256 per file**           |
-| Modification detection     |          No         | **Yes — byte level**                |
-| Confidence scoring         |          No         | **Yes — 0 to 100%**                 |
-| Kali app menu integration  |          No         | **Yes — with custom icon**          |
-| Tier system                |          No         | **Yes — Tier 1, 2, 3**              |
+| Feature | Basic cron scanners | CronGhost |
+|---|---|---|
+| Locations checked | 4-7 | **14** |
+| False positive filtering | None | Smart whitelist + confidence scoring |
+| Package manager check | No | **Yes — dpkg verification** |
+| Cryptographic baseline | No | **Yes — SHA256 per file** |
+| Modification detection | No | **Yes — byte level** |
+| Confidence scoring | No | **Yes — 0 to 100%** |
+| Kali app menu integration | No | **Yes — with custom icon** |
+| Tier system | No | **Yes — Tier 1, 2, 3** |
 
 ---
 

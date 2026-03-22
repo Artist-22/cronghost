@@ -565,6 +565,24 @@ def analyze_file(filepath):
     if filepath in KALI_KNOWN_SAFE:
         return None
 
+    SAFE_DIRS = [
+        "/etc/cron.d/", "/etc/cron.daily/", "/etc/cron.hourly/",
+        "/etc/cron.weekly/", "/etc/cron.monthly/", "/etc/pam.d/",
+        "/etc/xdg/autostart/", "/etc/profile.d/",
+    ]
+    in_safe_dir = any(filepath.startswith(d) for d in SAFE_DIRS)
+
+    if in_safe_dir:
+        try:
+            with open(filepath, "rb") as f:
+                raw = f.read()
+            content = raw.decode("utf-8", errors="ignore")
+            high_hits = [p for p in HIGH_PATTERNS if p["p"] in content]
+            if not high_hits:
+                return None
+        except Exception:
+            return None
+
     result = {
         "filepath"      : filepath,
         "verdict"       : "clean",

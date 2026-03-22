@@ -345,9 +345,10 @@ def find_hidden_files(dirpath):
     An attacker hides their script as .update or .cache
     """
     hidden = []
+    SKIP = {".placeholder", ".gitkeep", ".gitignore"}
     try:
         for f in os.listdir(dirpath):
-            if f.startswith(".") and f not in (".", ".."):
+            if f.startswith(".") and f not in (".", "..") and f not in SKIP:
                 fp = os.path.join(dirpath, f)
                 if os.path.isfile(fp):
                     hidden.append(fp)

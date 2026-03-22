@@ -84,6 +84,10 @@ KALI_KNOWN_SAFE = {
     "/etc/cron.d/php",
     "/etc/cron.d/sysstat",
     "/etc/cron.d/.placeholder",
+    "/etc/cron.daily/.placeholder",
+    "/etc/cron.hourly/.placeholder",
+    "/etc/cron.weekly/.placeholder",
+    "/etc/cron.monthly/.placeholder",
 
     # ── /etc/cron.daily/ ────────────────────────────────────
     "/etc/cron.daily/apt-compat",
@@ -106,6 +110,7 @@ KALI_KNOWN_SAFE = {
     "/etc/cron.monthly/.placeholder",
 
     # ── /etc/environment ─────────────────────────────────────
+    "/etc/crontab",
     "/etc/environment",
 
     # ── /etc/pam.d/ — all standard Kali PAM files ───────────

